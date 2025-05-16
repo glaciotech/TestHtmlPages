@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Upload</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .upload-container {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-btn {
+      display: inline-block;
+      background-color: #4285f4;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 20px 0;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .upload-btn:hover {
+      background-color: #3367d6;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    #video-preview {
+      max-width: 100%;
+      margin-top: 20px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .status {
+      margin-top: 15px;
+      color: #666;
+    }
+
+    .submit-btn {
+      background-color: #0f9d58;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 20px 0;
+      border: none;
+      display: none;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #0b8043;
+    }
+  </style>
+</head>
+<body>
+<h1>Upload Your Video</h1>
+
+<div class="upload-container">
+  <p>Tap the button below to select a video from your camera roll.<br>
+    You can edit the video using your phone's native tools before uploading.</p>
+
+  <label for="file-input" class="upload-btn">Select Video</label>
+  <input type="file" id="file-input" accept="video/*" capture>
+
+  <div class="status" id="status-message"></div>
+
+  <video id="video-preview" controls></video>
+
+  <button id="submit-btn" class="submit-btn">Upload Video</button>
+</div>
+
+<script>
+  const fileInput = document.getElementById('file-input');
+  const videoPreview = document.getElementById('video-preview');
+  const statusMessage = document.getElementById('status-message');
+  const submitBtn = document.getElementById('submit-btn');
+
+  fileInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+      // Check if the file is a video
+      if (file.type.startsWith('video/')) {
+        // Create a URL for the video file
+        const videoURL = URL.createObjectURL(file);
+
+        // Set the source of the video element
+        videoPreview.src = videoURL;
+        videoPreview.style.display = 'block';
+
+        // Show the submit button
+        submitBtn.style.display = 'inline-block';
+
+        // Update status message
+        statusMessage.textContent = `Selected: ${file.name}`;
+      } else {
+        statusMessage.textContent = 'Please select a video file.';
+        videoPreview.style.display = 'none';
+        submitBtn.style.display = 'none';
+      }
+    }
+  });
+
+  submitBtn.addEventListener('click', function() {
+    // Here you would typically send the file to your server
+    // For this example, we'll just show a success message
+    statusMessage.textContent = 'Video uploaded successfully!';
+
+    // In a real application, you would use FormData and fetch/XMLHttpRequest
+    // to send the file to your server
+    /*
+    const formData = new FormData();
+    formData.append('video', fileInput.files[0]);
+
+    fetch('/upload-endpoint', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      statusMessage.textContent = 'Video uploaded successfully!';
+    })
+    .catch(error => {
+      statusMessage.textContent = 'Error uploading video. Please try again.';
+      console.error('Error:', error);
+    });
+    */
+  });
+</script>
+</body>
+</html>
