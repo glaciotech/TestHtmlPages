@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Upload</title>
+  <title>Video Recorder</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -17,15 +17,15 @@
       color: #333;
     }
 
-    .upload-container {
-      margin-top: 30px;
+    .container {
+      margin-top: 20px;
       padding: 20px;
       border-radius: 10px;
       background-color: #f5f5f5;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .upload-btn {
+    .btn {
       display: inline-block;
       background-color: #4285f4;
       color: white;
@@ -33,24 +33,74 @@
       border-radius: 25px;
       cursor: pointer;
       font-size: 16px;
-      margin: 20px 0;
+      margin: 10px 5px;
       border: none;
       transition: background-color 0.3s;
     }
 
-    .upload-btn:hover {
+    .btn:hover {
       background-color: #3367d6;
     }
 
-    #file-input {
+    .btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .btn-danger {
+      background-color: #ea4335;
+    }
+
+    .btn-danger:hover {
+      background-color: #d33426;
+    }
+
+    .btn-success {
+      background-color: #0f9d58;
+    }
+
+    .btn-success:hover {
+      background-color: #0b8043;
+    }
+
+    #camera-view {
+      width: 100%;
+      max-height: 400px;
+      background-color: #000;
+      border-radius: 8px;
+      margin-top: 10px;
       display: none;
     }
 
     #video-preview {
-      max-width: 100%;
-      margin-top: 20px;
+      width: 100%;
+      max-height: 400px;
       border-radius: 8px;
+      margin-top: 10px;
       display: none;
+    }
+
+    .camera-controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .trim-controls {
+      margin-top: 15px;
+      display: none;
+    }
+
+    .trim-slider {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .trim-values {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
     }
 
     .status {
@@ -58,98 +108,420 @@
       color: #666;
     }
 
-    .submit-btn {
-      background-color: #0f9d58;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 16px;
-      margin: 20px 0;
-      border: none;
+    .hidden {
       display: none;
-      transition: background-color 0.3s;
     }
 
-    .submit-btn:hover {
-      background-color: #0b8043;
+    .video-container {
+      position: relative;
+    }
+
+    .timer {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-<h1>Upload Your Video</h1>
+<h1>Record & Edit Video</h1>
 
-<div class="upload-container">
-  <p>Tap the button below to select a video from your camera roll.<br>
-    You can edit the video using your phone's native tools before uploading.</p>
+<div class="container">
+  <div id="start-section">
+    <p>Tap the button below to start recording a video.<br>You can switch cameras and trim the video before uploading.</p>
+    <button id="start-camera" class="btn">Start Camera</button>
+  </div>
 
-  <label for="file-input" class="upload-btn">Select Video</label>
-  <input type="file" id="file-input" accept="video/*" capture>
+  <div id="camera-section" class="hidden">
+    <div class="video-container">
+      <video id="camera-view" autoplay playsinline muted></video>
+      <div id="record-timer" class="timer hidden">00:00</div>
+    </div>
+    
+    <div class="camera-controls">
+      <button id="switch-camera" class="btn">Switch Camera</button>
+      <button id="start-recording" class="btn">Start Recording</button>
+      <button id="stop-recording" class="btn btn-danger hidden">Stop Recording</button>
+    </div>
+    
+    <div class="status" id="camera-status"></div>
+  </div>
 
-  <div class="status" id="status-message"></div>
-
-  <video id="video-preview" controls></video>
-
-  <button id="submit-btn" class="submit-btn">Upload Video</button>
+  <div id="preview-section" class="hidden">
+    <p>Preview your recording below. You can trim it before uploading.</p>
+    <video id="video-preview" controls></video>
+    
+    <div class="trim-controls" id="trim-controls">
+      <div class="trim-values">
+        <span id="start-time">0:00</span>
+        <span id="end-time">0:00</span>
+      </div>
+      <div>
+        <label for="trim-start">Start point:</label>
+        <input type="range" id="trim-start" class="trim-slider" min="0" max="100" value="0">
+      </div>
+      <div>
+        <label for="trim-end">End point:</label>
+        <input type="range" id="trim-end" class="trim-slider" min="0" max="100" value="100">
+      </div>
+    </div>
+    
+    <div class="camera-controls">
+      <button id="apply-trim" class="btn">Apply Trim</button>
+      <button id="retake" class="btn btn-danger">Retake</button>
+      <button id="upload" class="btn btn-success">Upload</button>
+    </div>
+    
+    <div class="status" id="preview-status"></div>
+  </div>
 </div>
 
 <script>
-  const fileInput = document.getElementById('file-input');
+  // DOM Elements
+  const startSection = document.getElementById('start-section');
+  const cameraSection = document.getElementById('camera-section');
+  const previewSection = document.getElementById('preview-section');
+  
+  const startCameraBtn = document.getElementById('start-camera');
+  const switchCameraBtn = document.getElementById('switch-camera');
+  const startRecordingBtn = document.getElementById('start-recording');
+  const stopRecordingBtn = document.getElementById('stop-recording');
+  
+  const cameraView = document.getElementById('camera-view');
   const videoPreview = document.getElementById('video-preview');
-  const statusMessage = document.getElementById('status-message');
-  const submitBtn = document.getElementById('submit-btn');
+  const recordTimer = document.getElementById('record-timer');
+  
+  const trimControls = document.getElementById('trim-controls');
+  const trimStart = document.getElementById('trim-start');
+  const trimEnd = document.getElementById('trim-end');
+  const startTimeDisplay = document.getElementById('start-time');
+  const endTimeDisplay = document.getElementById('end-time');
+  
+  const applyTrimBtn = document.getElementById('apply-trim');
+  const retakeBtn = document.getElementById('retake');
+  const uploadBtn = document.getElementById('upload');
+  
+  const cameraStatus = document.getElementById('camera-status');
+  const previewStatus = document.getElementById('preview-status');
 
-  fileInput.addEventListener('change', function(event) {
-    const file = event.target.files[0];
+  // Global variables
+  let stream = null;
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let recordedBlob = null;
+  let trimmedBlob = null;
+  let facingMode = 'user'; // Start with front camera
+  let recordingStartTime = 0;
+  let recordingTimer = null;
+  let videoTracks = [];
 
-    if (file) {
-      // Check if the file is a video
-      if (file.type.startsWith('video/')) {
-        // Create a URL for the video file
-        const videoURL = URL.createObjectURL(file);
-
-        // Set the source of the video element
-        videoPreview.src = videoURL;
-        videoPreview.style.display = 'block';
-
-        // Show the submit button
-        submitBtn.style.display = 'inline-block';
-
-        // Update status message
-        statusMessage.textContent = `Selected: ${file.name}`;
-      } else {
-        statusMessage.textContent = 'Please select a video file.';
-        videoPreview.style.display = 'none';
-        submitBtn.style.display = 'none';
-      }
+  // Start camera
+  startCameraBtn.addEventListener('click', async () => {
+    try {
+      await startCamera();
+      startSection.classList.add('hidden');
+      cameraSection.classList.remove('hidden');
+    } catch (error) {
+      cameraStatus.textContent = `Error accessing camera: ${error.message}`;
     }
   });
 
-  submitBtn.addEventListener('click', function() {
-    // Here you would typically send the file to your server
-    // For this example, we'll just show a success message
-    statusMessage.textContent = 'Video uploaded successfully!';
-
-    // In a real application, you would use FormData and fetch/XMLHttpRequest
-    // to send the file to your server
-    /*
-    const formData = new FormData();
-    formData.append('video', fileInput.files[0]);
-
-    fetch('/upload-endpoint', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      statusMessage.textContent = 'Video uploaded successfully!';
-    })
-    .catch(error => {
-      statusMessage.textContent = 'Error uploading video. Please try again.';
-      console.error('Error:', error);
-    });
-    */
+  // Switch camera (front/rear)
+  switchCameraBtn.addEventListener('click', async () => {
+    // Toggle facing mode
+    facingMode = facingMode === 'user' ? 'environment' : 'user';
+    
+    // Stop current stream
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
+    
+    // Restart camera with new facing mode
+    try {
+      await startCamera();
+      cameraStatus.textContent = `Switched to ${facingMode === 'user' ? 'front' : 'rear'} camera`;
+    } catch (error) {
+      cameraStatus.textContent = `Error switching camera: ${error.message}`;
+    }
   });
+
+  // Start recording
+  startRecordingBtn.addEventListener('click', () => {
+    if (stream && !mediaRecorder) {
+      startRecording();
+    }
+  });
+
+  // Stop recording
+  stopRecordingBtn.addEventListener('click', () => {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      stopRecording();
+    }
+  });
+
+  // Apply trim
+  applyTrimBtn.addEventListener('click', () => {
+    applyTrim();
+  });
+
+  // Retake video
+  retakeBtn.addEventListener('click', () => {
+    resetRecording();
+    previewSection.classList.add('hidden');
+    cameraSection.classList.remove('hidden');
+  });
+
+  // Upload video
+  uploadBtn.addEventListener('click', () => {
+    uploadVideo();
+  });
+
+  // Initialize trim controls when video is loaded
+  videoPreview.addEventListener('loadedmetadata', () => {
+    initTrimControls();
+  });
+
+  // Update trim display when sliders change
+  trimStart.addEventListener('input', updateTrimDisplay);
+  trimEnd.addEventListener('input', updateTrimDisplay);
+
+  // Functions
+  async function startCamera() {
+    const constraints = {
+      video: {
+        facingMode: facingMode,
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      },
+      audio: true
+    };
+
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
+    cameraView.srcObject = stream;
+    cameraView.style.display = 'block';
+    
+    // Get video tracks for later use
+    videoTracks = stream.getVideoTracks();
+    
+    // Check if we can actually switch cameras
+    if (videoTracks.length > 0) {
+      const capabilities = videoTracks[0].getCapabilities();
+      // Only show switch camera button if device has multiple cameras
+      switchCameraBtn.disabled = !capabilities.facingMode || 
+                                 !capabilities.facingMode.length || 
+                                 capabilities.facingMode.length < 2;
+    }
+  }
+
+  function startRecording() {
+    recordedChunks = [];
+    const options = { mimeType: 'video/webm;codecs=vp9,opus' };
+    
+    try {
+      mediaRecorder = new MediaRecorder(stream, options);
+    } catch (e) {
+      // Try a different format if the browser doesn't support the preferred one
+      try {
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+      } catch (e2) {
+        try {
+          mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/mp4' });
+        } catch (e3) {
+          mediaRecorder = new MediaRecorder(stream);
+        }
+      }
+    }
+
+    mediaRecorder.addEventListener('dataavailable', (event) => {
+      if (event.data.size > 0) {
+        recordedChunks.push(event.data);
+      }
+    });
+
+    mediaRecorder.addEventListener('stop', () => {
+      recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
+      videoPreview.src = URL.createObjectURL(recordedBlob);
+      cameraSection.classList.add('hidden');
+      previewSection.classList.remove('hidden');
+      trimControls.style.display = 'block';
+      stopTimer();
+    });
+
+    // Start the recording
+    mediaRecorder.start();
+    startRecordingBtn.classList.add('hidden');
+    stopRecordingBtn.classList.remove('hidden');
+    cameraStatus.textContent = 'Recording...';
+    
+    // Start the timer
+    startTimer();
+  }
+
+  function stopRecording() {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+      mediaRecorder = null;
+      stopRecordingBtn.classList.add('hidden');
+      startRecordingBtn.classList.remove('hidden');
+    }
+  }
+
+  function resetRecording() {
+    if (videoPreview.src) {
+      URL.revokeObjectURL(videoPreview.src);
+      videoPreview.src = '';
+    }
+    recordedChunks = [];
+    recordedBlob = null;
+    trimmedBlob = null;
+    previewStatus.textContent = '';
+  }
+
+  function initTrimControls() {
+    const duration = videoPreview.duration;
+    
+    // Update the end time display
+    endTimeDisplay.textContent = formatTime(duration);
+    
+    // Reset trim controls
+    trimStart.value = 0;
+    trimEnd.value = 100;
+    
+    updateTrimDisplay();
+  }
+
+  function updateTrimDisplay() {
+    const duration = videoPreview.duration;
+    const startPercent = parseInt(trimStart.value);
+    const endPercent = parseInt(trimEnd.value);
+    
+    // Make sure end is always >= start
+    if (endPercent < startPercent) {
+      trimEnd.value = startPercent;
+      return;
+    }
+    
+    const startTime = (startPercent / 100) * duration;
+    const endTime = (endPercent / 100) * duration;
+    
+    startTimeDisplay.textContent = formatTime(startTime);
+    endTimeDisplay.textContent = formatTime(endTime);
+  }
+
+  async function applyTrim() {
+    if (!recordedBlob) {
+      previewStatus.textContent = 'No video to trim';
+      return;
+    }
+    
+    const duration = videoPreview.duration;
+    const startPercent = parseInt(trimStart.value);
+    const endPercent = parseInt(trimEnd.value);
+    
+    if (startPercent === 0 && endPercent === 100) {
+      previewStatus.textContent = 'No trimming applied';
+      return;
+    }
+    
+    const startTime = (startPercent / 100) * duration;
+    const endTime = (endPercent / 100) * duration;
+    
+    previewStatus.textContent = 'Applying trim...';
+    
+    try {
+      // For browsers that support the MediaSource API
+      if (window.MediaSource) {
+        // This is a simplified approach - in production you'd want to use a more robust solution
+        // like ffmpeg.wasm or a server-side trimming service
+        
+        // For now, we'll just set the video element's currentTime and play/pause to simulate trimming
+        videoPreview.currentTime = startTime;
+        
+        // Note: This doesn't actually trim the video file, just changes the playback
+        // In a real app, you'd need to use a video editing library or send to server
+        previewStatus.textContent = 'Trim preview applied. The full video will still be uploaded.';
+      } else {
+        previewStatus.textContent = 'Your browser doesn\'t support video trimming.';
+      }
+    } catch (error) {
+      previewStatus.textContent = `Error applying trim: ${error.message}`;
+    }
+  }
+
+  function uploadVideo() {
+    // In a real application, you would send the video to your server
+    // For this example, we'll just show a success message
+    const videoToUpload = trimmedBlob || recordedBlob;
+    
+    if (!videoToUpload) {
+      previewStatus.textContent = 'No video to upload';
+      return;
+    }
+    
+    previewStatus.textContent = 'Uploading video...';
+    
+    // Simulate upload
+    setTimeout(() => {
+      previewStatus.textContent = 'Video uploaded successfully!';
+      
+      // In a real application, you would use FormData and fetch/XMLHttpRequest
+      // to send the file to your server
+      /*
+      const formData = new FormData();
+      formData.append('video', videoToUpload, 'recording.webm');
+
+      fetch('/upload-endpoint', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        previewStatus.textContent = 'Video uploaded successfully!';
+      })
+      .catch(error => {
+        previewStatus.textContent = 'Error uploading video. Please try again.';
+        console.error('Error:', error);
+      });
+      */
+    }, 1500);
+  }
+
+  function startTimer() {
+    recordingStartTime = Date.now();
+    recordTimer.classList.remove('hidden');
+    recordTimer.textContent = '00:00';
+    
+    recordingTimer = setInterval(() => {
+      const elapsedTime = (Date.now() - recordingStartTime) / 1000; // in seconds
+      recordTimer.textContent = formatTime(elapsedTime);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if (recordingTimer) {
+      clearInterval(recordingTimer);
+      recordingTimer = null;
+    }
+    recordTimer.classList.add('hidden');
+  }
+
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  // Check if MediaRecorder is supported
+  if (!window.MediaRecorder) {
+    document.body.innerHTML = '<div style="text-align: center; padding: 20px;"><h1>Error</h1><p>Your browser does not support the MediaRecorder API. Please try using a modern browser like Chrome, Firefox, or Safari.</p></div>';
+  }
 </script>
 </body>
 </html>
