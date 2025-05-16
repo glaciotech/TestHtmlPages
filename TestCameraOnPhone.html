@@ -1,187 +1,155 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2299.77">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #2a2c33; -webkit-text-stroke: #2a2c33; background-color: #f9f9f9}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #db3f39; -webkit-text-stroke: #db3f39; background-color: #f9f9f9}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #a75705; -webkit-text-stroke: #a75705; background-color: #f9f9f9}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #42933e; -webkit-text-stroke: #42933e; background-color: #f9f9f9}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #900112; -webkit-text-stroke: #900112; background-color: #f9f9f9}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #8f9096; -webkit-text-stroke: #8f9096; background-color: #f9f9f9; min-height: 14.0px}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #900112; -webkit-text-stroke: #900112; background-color: #f9f9f9; min-height: 14.0px}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #325eee; -webkit-text-stroke: #325eee; background-color: #f9f9f9}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #8f9096; -webkit-text-stroke: #8f9096; background-color: #f9f9f9}
-    span.s1 {font-kerning: none}
-    span.s2 {font-kerning: none; color: #2a2c33; -webkit-text-stroke: 0px #2a2c33}
-    span.s3 {font-kerning: none; color: #a75705; -webkit-text-stroke: 0px #a75705}
-    span.s4 {font-kerning: none; color: #42933e; -webkit-text-stroke: 0px #42933e}
-    span.s5 {font-kerning: none; color: #900112; -webkit-text-stroke: 0px #900112}
-    span.s6 {font-kerning: none; color: #db3f39; -webkit-text-stroke: 0px #db3f39}
-    span.s7 {font-kerning: none; color: #325eee; -webkit-text-stroke: 0px #325eee}
-    span.s8 {font-kerning: none; color: #930093; -webkit-text-stroke: 0px #930093}
-    span.s9 {font-kerning: none; color: #8f9096; -webkit-text-stroke: 0px #8f9096}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Upload</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .upload-container {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-btn {
+      display: inline-block;
+      background-color: #4285f4;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 20px 0;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .upload-btn:hover {
+      background-color: #3367d6;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    #video-preview {
+      max-width: 100%;
+      margin-top: 20px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .status {
+      margin-top: 15px;
+      color: #666;
+    }
+
+    .submit-btn {
+      background-color: #0f9d58;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 20px 0;
+      border: none;
+      display: none;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #0b8043;
+    }
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p2"><span class="s2">&lt;</span><span class="s1">html </span><span class="s3">lang</span><span class="s2">="</span><span class="s4">en</span><span class="s2">"&gt;</span></p>
-<p class="p2"><span class="s2">&lt;</span><span class="s1">head</span><span class="s2">&gt;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;</span><span class="s6">meta </span><span class="s1">charset</span><span class="s2">="</span><span class="s4">UTF-8</span><span class="s2">"&gt;</span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;</span><span class="s6">meta </span><span class="s3">name</span><span class="s2">="</span><span class="s1">viewport</span><span class="s2">"</span><span class="s6"> </span><span class="s3">content</span><span class="s2">="</span><span class="s1">width=device-width, initial-scale=1.0</span><span class="s2">"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;</span><span class="s6">title</span><span class="s2">&gt;</span><span class="s1">Video Upload</span><span class="s2">&lt;/</span><span class="s6">title</span><span class="s2">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;</span><span class="s1">style</span><span class="s2">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">body</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">font-family</span><span class="s2">:</span><span class="s1"> -apple-system</span><span class="s2">,</span><span class="s1"> BlinkMacSystemFont</span><span class="s2">,</span><span class="s1"> </span><span class="s4">'Segoe UI'</span><span class="s2">,</span><span class="s1"> Roboto</span><span class="s2">,</span><span class="s1"> Oxygen</span><span class="s2">,</span><span class="s1"> Ubuntu</span><span class="s2">,</span><span class="s1"> Cantarell</span><span class="s2">,</span><span class="s1"> </span><span class="s4">'Open Sans'</span><span class="s2">,</span><span class="s1"> </span><span class="s4">'Helvetica Neue'</span><span class="s2">,</span><span class="s1"> sans-serif</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">max-width</span><span class="s2">:</span><span class="s1"> </span><span class="s3">600</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">margin</span><span class="s2">:</span><span class="s1"> </span><span class="s3">0</span><span class="s1"> auto</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">padding</span><span class="s2">:</span><span class="s1"> </span><span class="s3">20</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">text-align</span><span class="s2">:</span><span class="s1"> center</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">h1</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">color</span><span class="s2">:</span><span class="s1"> #333</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.upload-container</span><span class="s5"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">margin-top</span><span class="s2">:</span><span class="s1"> </span><span class="s3">30</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">padding</span><span class="s2">:</span><span class="s1"> </span><span class="s3">20</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">border-radius</span><span class="s2">:</span><span class="s1"> </span><span class="s3">10</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">background-color</span><span class="s2">:</span><span class="s1"> #f5f5f5</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">box-shadow</span><span class="s2">:</span><span class="s1"> </span><span class="s3">0</span><span class="s1"> </span><span class="s3">2</span><span class="s1">px </span><span class="s3">10</span><span class="s1">px </span><span class="s7">rgba</span><span class="s2">(</span><span class="s3">0</span><span class="s2">,</span><span class="s1"> </span><span class="s3">0</span><span class="s2">,</span><span class="s1"> </span><span class="s3">0</span><span class="s2">,</span><span class="s1"> </span><span class="s3">0.1</span><span class="s2">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.upload-btn</span><span class="s5"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">display</span><span class="s2">:</span><span class="s1"> inline-block</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">background-color</span><span class="s2">:</span><span class="s1"> #4285f4</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">color</span><span class="s2">:</span><span class="s1"> white</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">padding</span><span class="s2">:</span><span class="s1"> </span><span class="s3">12</span><span class="s1">px </span><span class="s3">24</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">border-radius</span><span class="s2">:</span><span class="s1"> </span><span class="s3">25</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">cursor</span><span class="s2">:</span><span class="s1"> pointer</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">font-size</span><span class="s2">:</span><span class="s1"> </span><span class="s3">16</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">margin</span><span class="s2">:</span><span class="s1"> </span><span class="s3">20</span><span class="s1">px </span><span class="s3">0</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">border</span><span class="s2">:</span><span class="s1"> none</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">transition</span><span class="s2">:</span><span class="s1"> background-color </span><span class="s3">0.3</span><span class="s1">s</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.upload-btn:hover</span><span class="s5"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">background-color</span><span class="s2">:</span><span class="s1"> #3367d6</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">#file-input</span><span class="s5"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">display</span><span class="s2">:</span><span class="s1"> none</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">#video-preview</span><span class="s5"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">max-width</span><span class="s2">:</span><span class="s1"> </span><span class="s3">100</span><span class="s1">%</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">margin-top</span><span class="s2">:</span><span class="s1"> </span><span class="s3">20</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">border-radius</span><span class="s2">:</span><span class="s1"> </span><span class="s3">8</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">display</span><span class="s2">:</span><span class="s1"> none</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">.status</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">margin-top</span><span class="s2">:</span><span class="s1"> </span><span class="s3">15</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">color</span><span class="s2">:</span><span class="s1"> #666</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.submit-btn</span><span class="s5"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">background-color</span><span class="s2">:</span><span class="s1"> #0f9d58</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">color</span><span class="s2">:</span><span class="s1"> white</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">padding</span><span class="s2">:</span><span class="s1"> </span><span class="s3">12</span><span class="s1">px </span><span class="s3">24</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">border-radius</span><span class="s2">:</span><span class="s1"> </span><span class="s3">25</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">cursor</span><span class="s2">:</span><span class="s1"> pointer</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">font-size</span><span class="s2">:</span><span class="s1"> </span><span class="s3">16</span><span class="s1">px</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">margin</span><span class="s2">:</span><span class="s1"> </span><span class="s3">20</span><span class="s1">px </span><span class="s3">0</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">border</span><span class="s2">:</span><span class="s1"> none</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">display</span><span class="s2">:</span><span class="s1"> none</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">transition</span><span class="s2">:</span><span class="s1"> background-color </span><span class="s3">0.3</span><span class="s1">s</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.submit-btn:hover</span><span class="s5"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">background-color</span><span class="s2">:</span><span class="s1"> #0b8043</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">}</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;/</span><span class="s1">style</span><span class="s2">&gt;</span></p>
-<p class="p2"><span class="s2">&lt;/</span><span class="s1">head</span><span class="s2">&gt;</span></p>
-<p class="p2"><span class="s2">&lt;</span><span class="s1">body</span><span class="s2">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;</span><span class="s6">h1</span><span class="s2">&gt;</span><span class="s1">Upload Your Video</span><span class="s2">&lt;/</span><span class="s6">h1</span><span class="s2">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;</span><span class="s6">div </span><span class="s3">class</span><span class="s2">="</span><span class="s1">upload-container</span><span class="s2">"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">&lt;</span><span class="s6">p</span><span class="s2">&gt;</span><span class="s1">Tap the button below to select a video from your camera roll.</span><span class="s2">&lt;</span><span class="s6">br</span><span class="s2">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">           </span>You can edit the video using your phone's native tools before uploading.</span><span class="s2">&lt;/</span><span class="s6">p</span><span class="s2">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">&lt;</span><span class="s6">label </span><span class="s3">for</span><span class="s2">="</span><span class="s4">file-input</span><span class="s2">"</span><span class="s6"> </span><span class="s3">class</span><span class="s2">="</span><span class="s4">upload-btn</span><span class="s2">"&gt;</span><span class="s1">Select Video</span><span class="s2">&lt;/</span><span class="s6">label</span><span class="s2">&gt;</span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s2">&lt;</span><span class="s6">input </span><span class="s3">type</span><span class="s2">="</span><span class="s1">file</span><span class="s2">"</span><span class="s6"> </span><span class="s3">id</span><span class="s2">="</span><span class="s1">file-input</span><span class="s2">"</span><span class="s6"> </span><span class="s3">accept</span><span class="s2">="</span><span class="s1">video/*</span><span class="s2">"</span><span class="s6"> </span><span class="s3">capture</span><span class="s2">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s2">&lt;</span><span class="s6">div </span><span class="s3">class</span><span class="s2">="</span><span class="s1">status</span><span class="s2">"</span><span class="s6"> </span><span class="s3">id</span><span class="s2">="</span><span class="s1">status-message</span><span class="s2">"&gt;&lt;/</span><span class="s6">div</span><span class="s2">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s2">&lt;</span><span class="s6">video </span><span class="s3">id</span><span class="s2">="</span><span class="s1">video-preview</span><span class="s2">"</span><span class="s6"> </span><span class="s3">controls</span><span class="s2">&gt;&lt;/</span><span class="s6">video</span><span class="s2">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">&lt;</span><span class="s6">button </span><span class="s3">id</span><span class="s2">="</span><span class="s4">submit-btn</span><span class="s2">"</span><span class="s6"> </span><span class="s3">class</span><span class="s2">="</span><span class="s4">submit-btn</span><span class="s2">"&gt;</span><span class="s1">Upload Video</span><span class="s2">&lt;/</span><span class="s6">button</span><span class="s2">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;/</span><span class="s6">div</span><span class="s2">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;</span><span class="s1">script</span><span class="s2">&gt;</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s8">const</span><span class="s5"> fileInput </span><span class="s1">=</span><span class="s5"> </span><span class="s1">document</span><span class="s2">.</span><span class="s1">getElementById</span><span class="s2">(</span><span class="s4">'file-input'</span><span class="s2">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">const</span><span class="s1"> videoPreview </span><span class="s7">=</span><span class="s1"> </span><span class="s7">document</span><span class="s2">.</span><span class="s7">getElementById</span><span class="s2">(</span><span class="s4">'video-preview'</span><span class="s2">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">const</span><span class="s1"> statusMessage </span><span class="s7">=</span><span class="s1"> </span><span class="s7">document</span><span class="s2">.</span><span class="s7">getElementById</span><span class="s2">(</span><span class="s4">'status-message'</span><span class="s2">);</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s8">const</span><span class="s5"> submitBtn </span><span class="s1">=</span><span class="s5"> </span><span class="s1">document</span><span class="s2">.</span><span class="s1">getElementById</span><span class="s2">(</span><span class="s4">'submit-btn'</span><span class="s2">);</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>fileInput</span><span class="s2">.</span><span class="s7">addEventListener</span><span class="s2">(</span><span class="s4">'change'</span><span class="s2">,</span><span class="s1"> </span><span class="s8">function</span><span class="s2">(</span><span class="s1">event</span><span class="s2">)</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">const</span><span class="s1"> file </span><span class="s7">=</span><span class="s1"> event</span><span class="s2">.</span><span class="s1">target</span><span class="s2">.</span><span class="s1">files</span><span class="s2">[</span><span class="s3">0</span><span class="s2">];</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">            </span></i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">if</span><span class="s1"> </span><span class="s2">(</span><span class="s1">file</span><span class="s2">)</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1"><i>// Check if the file is a video</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">if</span><span class="s1"> </span><span class="s2">(</span><span class="s1">file</span><span class="s2">.</span><span class="s1">type</span><span class="s2">.</span><span class="s7">startsWith</span><span class="s2">(</span><span class="s4">'video/'</span><span class="s2">))</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s1"><i>// Create a URL for the video file</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s8">const</span><span class="s1"> videoURL </span><span class="s7">=</span><span class="s1"> </span><span class="s3">URL</span><span class="s2">.</span><span class="s7">createObjectURL</span><span class="s2">(</span><span class="s1">file</span><span class="s2">);</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">                    </span></i></span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s1"><i>// Set the source of the video element</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>videoPreview</span><span class="s2">.</span><span class="s1">src </span><span class="s7">=</span><span class="s1"> videoURL</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>videoPreview</span><span class="s2">.</span><span class="s1">style</span><span class="s2">.</span><span class="s1">display </span><span class="s7">=</span><span class="s1"> </span><span class="s4">'block'</span><span class="s2">;</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">                    </span></i></span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s1"><i>// Show the submit button</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>submitBtn</span><span class="s2">.</span><span class="s1">style</span><span class="s2">.</span><span class="s1">display </span><span class="s7">=</span><span class="s1"> </span><span class="s4">'inline-block'</span><span class="s2">;</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">                    </span></i></span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s1"><i>// Update status message</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>statusMessage</span><span class="s2">.</span><span class="s1">textContent </span><span class="s7">=</span><span class="s1"> `</span><span class="s4">Selected: </span><span class="s1">${file.name}`</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">}</span><span class="s1"> </span><span class="s8">else</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>statusMessage</span><span class="s2">.</span><span class="s1">textContent </span><span class="s7">=</span><span class="s1"> </span><span class="s4">'Please select a video file.'</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>videoPreview</span><span class="s2">.</span><span class="s1">style</span><span class="s2">.</span><span class="s1">display </span><span class="s7">=</span><span class="s1"> </span><span class="s4">'none'</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>submitBtn</span><span class="s2">.</span><span class="s1">style</span><span class="s2">.</span><span class="s1">display </span><span class="s7">=</span><span class="s1"> </span><span class="s4">'none'</span><span class="s2">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">});</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">        </span></i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>submitBtn</span><span class="s2">.</span><span class="s7">addEventListener</span><span class="s2">(</span><span class="s4">'click'</span><span class="s2">,</span><span class="s1"> </span><span class="s8">function</span><span class="s2">()</span><span class="s1"> </span><span class="s2">{</span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1"><i>// Here you would typically send the file to your server</i></span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1"><i>// For this example, we'll just show a success message</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>statusMessage</span><span class="s2">.</span><span class="s1">textContent </span><span class="s7">=</span><span class="s1"> </span><span class="s4">'Video uploaded successfully!'</span><span class="s2">;</span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">            </span></i></span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1"><i>// In a real application, you would use FormData and fetch/XMLHttpRequest</i></span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1"><i>// to send the file to your server</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s9"><i>/*</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>const formData = new FormData();</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>formData.append('video', fileInput.files[0]);</i></span></p>
-<p class="p6"><span class="s1"><i><span class="Apple-converted-space">            </span></i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>fetch('/upload-endpoint', {</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">                </span>method: 'POST',</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">                </span>body: formData</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>})</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>.then(response =&gt; response.json())</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>.then(data =&gt; {</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">                </span>statusMessage.textContent = 'Video uploaded successfully!';</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>})</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>.catch(error =&gt; {</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">                </span>statusMessage.textContent = 'Error uploading video. Please try again.';</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">                </span>console.error('Error:', error);</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>});</i></span></p>
-<p class="p9"><span class="s1"><i><span class="Apple-converted-space">            </span>*/</i></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s2">});</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s2">&lt;/</span><span class="s1">script</span><span class="s2">&gt;</span></p>
-<p class="p2"><span class="s2">&lt;/</span><span class="s1">body</span><span class="s2">&gt;</span></p>
-<p class="p2"><span class="s2">&lt;/</span><span class="s1">html</span><span class="s2">&gt;</span></p>
+<h1>Upload Your Video</h1>
+
+<div class="upload-container">
+  <p>Tap the button below to select a video from your camera roll.<br>
+    You can edit the video using your phone's native tools before uploading.</p>
+
+  <label for="file-input" class="upload-btn">Select Video</label>
+  <input type="file" id="file-input" accept="video/*" capture>
+
+  <div class="status" id="status-message"></div>
+
+  <video id="video-preview" controls></video>
+
+  <button id="submit-btn" class="submit-btn">Upload Video</button>
+</div>
+
+<script>
+  const fileInput = document.getElementById('file-input');
+  const videoPreview = document.getElementById('video-preview');
+  const statusMessage = document.getElementById('status-message');
+  const submitBtn = document.getElementById('submit-btn');
+
+  fileInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+      // Check if the file is a video
+      if (file.type.startsWith('video/')) {
+        // Create a URL for the video file
+        const videoURL = URL.createObjectURL(file);
+
+        // Set the source of the video element
+        videoPreview.src = videoURL;
+        videoPreview.style.display = 'block';
+
+        // Show the submit button
+        submitBtn.style.display = 'inline-block';
+
+        // Update status message
+        statusMessage.textContent = `Selected: ${file.name}`;
+      } else {
+        statusMessage.textContent = 'Please select a video file.';
+        videoPreview.style.display = 'none';
+        submitBtn.style.display = 'none';
+      }
+    }
+  });
+
+  submitBtn.addEventListener('click', function() {
+    // Here you would typically send the file to your server
+    // For this example, we'll just show a success message
+    statusMessage.textContent = 'Video uploaded successfully!';
+
+    // In a real application, you would use FormData and fetch/XMLHttpRequest
+    // to send the file to your server
+    /*
+    const formData = new FormData();
+    formData.append('video', fileInput.files[0]);
+
+    fetch('/upload-endpoint', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      statusMessage.textContent = 'Video uploaded successfully!';
+    })
+    .catch(error => {
+      statusMessage.textContent = 'Error uploading video. Please try again.';
+      console.error('Error:', error);
+    });
+    */
+  });
+</script>
 </body>
 </html>
